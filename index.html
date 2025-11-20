@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRIS Store Official Hosting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Intro Section with Logo */
+        .intro-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: radial-gradient(circle at center, #001122 0%, #000000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .intro-section.fade-out {
+            opacity: 0;
+            transform: scale(1.1);
+            pointer-events: none;
+        }
+
+        .logo-container {
+            position: relative;
+            margin-bottom: 3rem;
+            animation: logoReveal 2s ease-out;
+        }
+
+        @keyframes logoReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotate(-180deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1) rotate(0deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #00d4ff, #0066ff, #00ffff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #fff;
+            box-shadow: 
+                0 0 50px rgba(0, 212, 255, 0.5),
+                inset 0 0 30px rgba(255, 255, 255, 0.2);
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% {
+                box-shadow: 
+                    0 0 50px rgba(0, 212, 255, 0.5),
+                    inset 0 0 30px rgba(255, 255, 255, 0.2);
+            }
+            50% {
+                box-shadow: 
+                    0 0 80px rgba(0, 212, 255, 0.8),
+                    inset 0 0 40px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00d4ff, #ffffff, #00d4ff);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShine 3s ease-in-out infinite;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        @keyframes textShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .welcome-text {
+            font-size: 1.5rem;
+            color: #00d4ff;
+            margin-bottom: 2rem;
+            animation: fadeInUp 2s ease-out 1s both;
+            text-align: center;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            animation: fadeInUp 2s ease-out 1.5s both;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #0066ff);
+            border-radius: 2px;
+            animation: loading 3s ease-out 2s both;
+        }
+
+        @keyframes loading {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        /* Main Payment Section - Modern Design */
+        .main-content {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .main-content.show {
+            opacity: 1;
+        }
+
+        /* Header Profesional */
+        .header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            animation: slideDown 1s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .header-text h1 {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #00d4ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-text p {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Payment Container Modern */
+        .payment-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .payment-card:hover::before {
+            left: 100%;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .payment-icon-modern {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .payment-title-modern {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .payment-description {
+            color: #888;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .payment-info-modern {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: #fff;
+            font-weight: 500;
+            font-family: 'Courier New', monospace;
+        }
+
+        .action-buttons-modern {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-modern {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00d4ff, #0066ff);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* QRIS Section */
+        .qris-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            text-align: center;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .qris-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .qris-subtitle {
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .qris-image-modern {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .qris-image-modern:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Notification Modern */
+        .notification-modern {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            color: #fff;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+
+        .notification-modern.show {
+            transform: translateX(0);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .payment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons-modern {
+                flex-direction: column;
+            }
+            
+            .brand-name {
+                font-size: 2rem;
+            }
+            
+            .welcome-text {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Additional Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Intro Section with Logo -->
+    <div class="intro-section" id="introSection">
+        <div class="logo-container floating">
+            <img src="logo.jpg" alt="CRIS Store Logo" class="logo" id="logoPhoto">
+            <div class="brand-name">CRIS Store</div>
+        </div>
+        <div class="welcome-text">
+            Selamat Datang di Payment Center<br>
+            Official Hosting Terpercaya
+        </div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
+        </div>
+    </div>
+
+    <!-- Main Payment Content -->
+    <div class="main-content" id="mainContent">
+        <header class="header">
+            <div class="header-content">
+                <div class="brand-header">
+                    <img src="logo.jpg" alt="CRIS Store Logo" class="header-logo" id="logoPhoto">
+                    <div class="header-text">
+                        <h1>CRIS Store Official</h1>
+                        <p>Hosting & Payment Solutions</p>
+                    </div>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Online 24/7</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="payment-container">
+            <div class="payment-grid">
+                <!-- DANA Payment Card -->
+                <div class="payment-card">
+                    <div class="payment-icon-modern">💳</div>
+                    <h3 class="payment-title-modern">DANA Digital Wallet</h3>
+                    <p class="payment-description">
+                        Pembayaran instan menggunakan aplikasi DANA. Cepat, aman, dan tersedia 24 jam.
+                    </p>
+                    <div class="payment-info-modern">
+                        <div class="info-row">
+                            <span class="info-label">Nomor DANA:</span>
+                            <span class="info-value" id="danaNumber">083153333965</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Status:</span>
+                            <span class="info-value" style="color: #00ff00;">Aktif</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons-modern">
+                        <button class="btn-modern btn-primary" onclick="copyNumber('danaNumber')">
+                            📋 Salin Nomor
+                        </button>
+                        <button class="btn-modern btn-secondary" onclick="showQRCode('dana')">
+                            📱 Tampilkan QR
+                        </button>
+                    </div>
+                </div>
+
+                <!-- QRIS Payment Card -->
+                <div class="payment-card">
+                    <div class="payment-icon-modern">📱</div>
+                    <h3 class="payment-title-modern">QRIS Universal</h3>
+                    <p class="payment-description">
+                        Scan kode QRIS dengan aplikasi e-wallet apapun. Mendukung semua bank dan e-wallet.
+                    </p>
+                    <div class="payment-info-modern">
+                        <div class="info-row">
+                            <span class="info-label">Metode:</span>
+                            <span class="info-value">QR Code</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Support:</span>
+                            <span class="info-value">All Bank & E-Wallet</span>
+                        </div>
+                    </div>
+                    <div class="action-buttons-modern">
+                        <button class="btn-modern btn-primary" onclick="downloadQRIS()">
+                            ⬇️ Download QRIS
+                        </button>
+                        <button class="btn-modern btn-secondary" onclick="showQRCode('qris')">
+                            🔍 Lihat QR
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QRIS Display Section -->
+            <div class="qris-section" id="qrisSection">
+                <h2 class="qris-title">QRIS Code</h2>
+                <p class="qris-subtitle">Scan kode ini dengan aplikasi e-wallet Anda</p>
+                <img src="qris.png" alt="QRIS Code" class="qris-image-modern" id="qrisImage">
+                <div class="action-buttons-modern" style="max-width: 300px; margin: 0 auto;">
+                    <button class="btn-modern btn-primary" onclick="downloadQRIS()">
+                        ⬇️ Simpan QRIS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification-modern" id="notification">
+        <div class="notification-content">
+            <span class="notification-icon" id="notificationIcon">✅</span>
+            <span id="notificationText">Berhasil disalin!</span>
+        </div>
+    </div>
+
+    <script>
+        // Auto-enter after animation
+        setTimeout(() => {
+            enterSite();
+        }, 5000);
+
+        // Enter site function
+        function enterSite() {
+            const introSection = document.getElementById('introSection');
+            const mainContent = document.getElementById('mainContent');
+            
+            introSection.classList.add('fade-out');
+            
+            setTimeout(() => {
+                introSection.style.display = 'none';
+                mainContent.classList.add('show');
+            }, 1500);
+        }
+
+        // Copy number function
+        function copyNumber(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('✅', 'Nomor berhasil disalin!');
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('✅', 'Nomor berhasil disalin!');
+            });
+        }
+
+        // Download QRIS function
+        function downloadQRIS() {
+            const qrisImage = document.getElementById('qrisImage');
+            const imageUrl = qrisImage.src;
+            
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = 'CRIS-Store-QRIS.png';
+            link.target = '_blank';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('⬇️', 'QRIS sedang didownload...');
+        }
+
+        // Show QR Code function
+        function showQRCode(type) {
+            const qrisSection = document.getElementById('qrisSection');
+            qrisSection.scrollIntoView({ behavior: 'smooth' });
+            showNotification('📱', `Menampilkan QR Code ${type.toUpperCase()}`);
+        }
+
+        // Show notification
+        function showNotification(icon, message) {
+            const notification = document.getElementById('notification');
+            const notificationIcon = document.getElementById('notificationIcon');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationIcon.textContent = icon;
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to payment cards
+            const paymentCards = document.querySelectorAll('.payment-card');
+            paymentCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click effects to buttons
+            const buttons = document.querySelectorAll('.btn-modern');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Add scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for scroll animations
+            const animatedElements = document.querySelectorAll('.payment-card, .qris-section');
+            animatedElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Add keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.getElementById('introSection').style.display !== 'none') {
+                enterSite();
+            }
+        });
+
+        // Simulate loading progress
+        const loadingProgress = document.querySelector('.loading-progress');
+        let progress = 0;
+        const loadingInterval = setInterval(() => {
+            progress += Math.random() * 15;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(loadingInterval);
+            }
+            loadingProgress.style.width = progress + '%';
+        }, 200);
+    </script>
+</body>
+</html>
